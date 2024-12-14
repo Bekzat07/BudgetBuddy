@@ -21,7 +21,7 @@ export const tabBarIcons: Record<
     default: <SunIcon />,
     focused: <SunIcon />,
   },
-  classlevel: {
+  budget: {
     default: <SunIcon />,
     focused: <SunIcon />,
   },

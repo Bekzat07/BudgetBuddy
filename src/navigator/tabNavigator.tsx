@@ -7,10 +7,11 @@ import {noHeaderStyle} from './appNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import TabBar from '../components/TabBar';
 import Home from '../screens/Home';
+import Budget from '../screens/Budget';
 
 export type TabNavigatorParamList = {
   Home: undefined;
-  Menu: undefined;
+  Budget: undefined;
   ReadKuran: undefined;
   Settings: undefined;
   ClassLevel: undefined;
@@ -45,7 +46,7 @@ const TabNavigator = () => {
           ...noHeaderStyle,
         }}
       />
-      <Tab.Screen name="ClassLevel" component={Home} options={noHeaderStyle} />
+      <Tab.Screen name="Budget" component={Budget} options={noHeaderStyle} />
 
       <Tab.Screen name="ReadKuran" component={Home} options={noHeaderStyle} />
       <Tab.Screen name="Settings" component={Home} options={noHeaderStyle} />

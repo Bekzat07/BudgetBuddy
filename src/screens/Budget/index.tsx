@@ -5,14 +5,14 @@ import {palette} from '../../theme/palette';
 import {View} from '@gluestack-ui/themed';
 import Coins from '../../assets/icons/Coins';
 
-const Home = () => {
+const Budget = () => {
   return (
     <CommonLayout>
       <View flex={1} gap={16}>
         <HStack>
           <Pressable bg={palette.tertriary} padding={6} borderRadius={12}>
             <HStack alignItems="center">
-              <Text fontSize={14}>Add bank</Text>
+              <Text fontSize={14}>Budget</Text>
               <AddIcon size="xs" />
             </HStack>
           </Pressable>
@@ -41,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Budget;

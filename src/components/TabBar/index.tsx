@@ -1,6 +1,12 @@
 import React from 'react';
 import {Platform, TouchableOpacity} from 'react-native';
-import {HStack, SunIcon} from '@gluestack-ui/themed';
+import {
+  BellIcon,
+  EditIcon,
+  HStack,
+  SunIcon,
+  AddIcon,
+} from '@gluestack-ui/themed';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 // styles
@@ -22,16 +28,16 @@ export const tabBarIcons: Record<
     focused: <SunIcon />,
   },
   budget: {
-    default: <SunIcon />,
-    focused: <SunIcon />,
+    default: <AddIcon />,
+    focused: <AddIcon />,
   },
   readkuran: {
-    default: <SunIcon />,
-    focused: <SunIcon />,
+    default: <EditIcon />,
+    focused: <EditIcon />,
   },
   settings: {
-    default: <SunIcon />,
-    focused: <SunIcon />,
+    default: <BellIcon />,
+    focused: <BellIcon />,
   },
 };
 

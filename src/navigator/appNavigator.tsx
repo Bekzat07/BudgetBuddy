@@ -8,11 +8,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import Onboarding from '../screens/Onboarding';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import TabNavigator from './tabNavigator';
 
 export type MainStackParamList = {
   Onboarding: undefined;
   Login: undefined;
   Register: undefined;
+  tabNavigator: undefined;
 };
 
 export type AppStackScreenProps = NativeStackScreenProps<
@@ -41,6 +43,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{...noHeaderStyle, ...gestureDisabled}}
+        />
+        <Stack.Screen
+          name="tabNavigator"
+          component={TabNavigator}
           options={{...noHeaderStyle, ...gestureDisabled}}
         />
       </Stack.Navigator>

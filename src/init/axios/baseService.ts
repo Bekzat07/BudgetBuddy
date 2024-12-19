@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
-import {load, remove, save} from '../../utils/storage';
+import {save} from '../../utils/storage';
 
 const accessToken = 'accessToken';
 

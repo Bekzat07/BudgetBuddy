@@ -9,3 +9,8 @@ export type User = {
   phone: string;
   accessToken: string;
 };
+
+export type LoginForm = {
+  email: string;
+  password: string;
+};

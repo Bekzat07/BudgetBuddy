@@ -1,14 +1,17 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import baseService from '../../../init/axios/baseService';
 
-export const registerAndLogin = createAsyncThunk<{phoneId: string}, string>(
-  'user/registerAndLogin',
-  async (phone, {rejectWithValue}) => {
-    const formattedNumber = phone.replace(/\D/g, '');
+// types
+import {LoginForm, User} from '../types';
+
+export const login = createAsyncThunk<User, LoginForm>(
+  'auth/login',
+  async (authDetails, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.post<{phoneId: string}>(
-        `/api/v1/auth/register-login`,
-      );
+      const {data} = await baseService.post('/auth/login', {
+        email: authDetails.email,
+        password: authDetails.password,
+      });
 
       return data;
     } catch (error: any) {

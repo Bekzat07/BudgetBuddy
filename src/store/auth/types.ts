@@ -20,4 +20,5 @@ export type RegisterForm = {
   email: string;
   password: string;
   phone: string;
+  name: string;
 };

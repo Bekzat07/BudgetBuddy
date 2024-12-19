@@ -9,6 +9,8 @@ import {login} from './thunk/login';
 
 // utils
 import {remove} from '../../utils/storage';
+import {register} from './thunk/register';
+import {LoginForm, RegisterForm} from './types';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -17,12 +19,15 @@ export const useAuth = () => {
   const logout = () => {
     dispatch(authActions.initialState());
     remove('accessToken');
-    // dispatch(authActions.changeIsAuthenticatedStatus());
+    dispatch(authActions.changeIsAuthenticatedStatus());
     delete baseService.defaults.headers.common[authAccessTokenHeaderName];
   };
 
   return {
-    login: async (authDetails: any) => dispatch(login(authDetails)).unwrap(),
+    register: async (authDetails: RegisterForm) =>
+      dispatch(register(authDetails)).unwrap(),
+    login: async (authDetails: LoginForm) =>
+      dispatch(login(authDetails)).unwrap(),
     logout,
     isLoading: useSelector(({auth}) => auth.isLoading),
     isAuthenticated: useSelector(({auth}) => auth.isAuthenticated),

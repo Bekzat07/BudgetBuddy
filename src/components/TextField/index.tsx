@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
+import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {TextInputProps, TextStyle, View, ViewStyle} from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import {HStack, Input, InputField, InputSlot} from '@gluestack-ui/themed';
@@ -12,6 +12,7 @@ import styles, {inputWrapper} from './styles';
 import {palette} from '../../theme/palette';
 import {Text} from '@gluestack-ui/themed';
 import EyeClosed from '../../assets/icons/EyeClosed';
+import {InfoIcon} from '@gluestack-ui/themed';
 
 // assets
 
@@ -22,7 +23,7 @@ export interface TextFieldProps extends TextInputProps {
   textInputStyle?: TextStyle | TextStyle[];
   name: string;
   defaultValue?: string;
-  error?: any | undefined;
+  error?: FieldError | undefined;
   mask?: string;
   label?: string;
   placeholder?: string;
@@ -174,6 +175,14 @@ export default function TextField(props: TextFieldProps) {
                   )}
                 </Input>
               </View>
+              {error && (
+                <View style={styles.errorIcon}>
+                  <InfoIcon color="red" />
+                  <Text color={'red'} style={styles.errorText}>
+                    {error.message}
+                  </Text>
+                </View>
+              )}
             </View>
           </>
         );

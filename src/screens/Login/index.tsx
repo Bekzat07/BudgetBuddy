@@ -47,7 +47,7 @@ const Login = () => {
     mode: 'onChange',
   });
   const {
-    formState: {isValid},
+    formState: {isValid, errors},
     handleSubmit,
   } = methods;
 
@@ -56,7 +56,6 @@ const Login = () => {
       const response = await login(values);
       save('accesToken', response.accessToken);
     } catch (error) {
-      console.log(error);
       getErrorMessage(error);
     }
   };
@@ -80,12 +79,14 @@ const Login = () => {
                   name="email"
                   label="Username/ Email"
                   placeholder="Email"
+                  error={errors.email}
                 />
                 <TextField
                   name="password"
                   label="Password"
                   secureTextEntry
                   placeholder="Password"
+                  error={errors.password}
                 />
               </VStack>
               <VStack gap={10}>
@@ -93,7 +94,7 @@ const Login = () => {
                   isLoading={isLoading}
                   opacity={isValid ? 1 : 0.4}
                   bg={palette.secondary}
-                  disabled={!isValid || !isLoading}
+                  disabled={!isValid || isLoading}
                   onPress={handleSubmit(onSubmit)}>
                   Login
                 </CustomButton>

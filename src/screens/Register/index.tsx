@@ -1,5 +1,5 @@
 import {KeyboardAvoidingView, VStack, View} from '@gluestack-ui/themed';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {AppStackScreenProps} from '../../navigator/appNavigator';
 import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
 import {Text, Pressable} from '@gluestack-ui/themed';
+import {getErrorMessage} from '../../utils/getErrorMessage';
 
 // components
 import TextField from '../../components/TextField';
@@ -22,8 +23,12 @@ import {palette} from '../../theme/palette';
 // assets
 import ArrowLeftIcon from '../../assets/icons/ArrowLeft';
 
+// redux
+import {RegisterForm} from '../../store/auth/types';
+import {useAuth} from '../../store/auth';
+
 const validationSchema = yup.object({
-  name: yup.string().email().required(),
+  name: yup.string().required(),
   email: yup.string().email().required(),
   phone: yup.string().required(),
   password: yup.string().required(),
@@ -31,26 +36,23 @@ const validationSchema = yup.object({
 
 const Register = () => {
   const navigation = useNavigation<AppStackScreenProps['navigation']>();
-  const [error, setError] = useState(false);
+  const {register, isLoading} = useAuth();
+
   const methods = useForm({
     resolver: yupResolver(validationSchema),
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
+
   const {
-    formState: {isValid},
+    formState: {isValid, errors},
     handleSubmit,
-    watch,
   } = methods;
-
-  const formData = watch();
-
-  useEffect(() => {
-    setError(false);
-  }, [formData.email, formData.password]);
-
-  const onSubmit = async (values: any) => {
-    console.log('onPress', values);
-    navigation.navigate('Login');
+  const onSubmit = async (values: RegisterForm) => {
+    try {
+      await register(values);
+    } catch (error) {
+      getErrorMessage(error);
+    }
   };
 
   return (
@@ -68,29 +70,25 @@ const Register = () => {
                 <Text fontWeight={900} fontSize={20}>
                   Sign up
                 </Text>
-                <TextField
-                  name="name"
-                  placeholder="Name"
-                  errorReguest={error}
-                />
+                <TextField name="name" placeholder="Name" error={errors.name} />
                 <TextField
                   name="email"
                   placeholder="Email"
-                  errorReguest={error}
+                  error={errors.email}
                 />
                 <TextField
+                  error={errors.phone}
                   inputStyle={styles.fontWeight}
                   name="phone"
-                  errorReguest={error}
                   phoneVariant
                   placeholder="Phone number"
                 />
                 <TextField
+                  error={errors.password}
                   inputStyle={styles.fontWeight}
                   name="password"
-                  errorReguest={error}
-                  phoneVariant
                   placeholder="Password"
+                  secureTextEntry
                 />
               </VStack>
               <VStack gap={10}>
@@ -103,9 +101,11 @@ const Register = () => {
                   </Text>
                 </Text>
                 <CustomButton
-                  disabled={!isValid || error}
+                  opacity={!isValid ? 0.4 : 1}
+                  isLoading={isLoading}
+                  disabled={!isValid}
                   bg={palette.secondary}
-                  onPress={() => handleSubmit(onSubmit)}>
+                  onPress={handleSubmit(onSubmit)}>
                   Next
                 </CustomButton>
               </VStack>

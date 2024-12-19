@@ -8,11 +8,7 @@ export const login = createAsyncThunk<User, LoginForm>(
   'auth/login',
   async (authDetails, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.post('/auth/login', {
-        email: authDetails.email,
-        password: authDetails.password,
-      });
-
+      const {data} = await baseService.post('auth/login', authDetails);
       return data;
     } catch (error: any) {
       return rejectWithValue(

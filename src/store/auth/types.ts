@@ -1,6 +1,7 @@
 export type AuthForm = {
   isLoading: boolean;
   user: User | null;
+  isAuthenticated: boolean;
 };
 
 export type User = {

@@ -34,7 +34,6 @@ export interface TextFieldProps extends TextInputProps {
   maxLength?: number;
   greenBorder?: boolean;
   phoneVariant?: boolean;
-  errorReguest?: boolean;
   plusPhoneVariant?: boolean;
   isDisabled?: boolean;
 }
@@ -55,7 +54,6 @@ export default function TextField(props: TextFieldProps) {
     greenBorder,
     maxLength,
     phoneVariant = false,
-    errorReguest = false,
     plusPhoneVariant = true,
     isDisabled = false,
     ...rest
@@ -85,7 +83,7 @@ export default function TextField(props: TextFieldProps) {
                 style={[
                   backgroundStyle,
                   inputWrapper({
-                    error: error || errorReguest,
+                    error: error,
                     search: search,
                     greenBorder: greenBorder,
                   }),

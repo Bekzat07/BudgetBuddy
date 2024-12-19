@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 
 import {
   NativeStackScreenProps,
@@ -14,6 +14,9 @@ import Register from '../screens/Register';
 
 // redux
 import {useAuth} from '../store/auth';
+
+// utils
+import {load} from '../utils/storage';
 
 export type MainStackParamList = {
   Onboarding: undefined;
@@ -32,8 +35,19 @@ export const noHeaderStyle = {headerShown: false};
 export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
-  const {isAuthenticated} = useAuth();
-  console.log('isAuthenticated', isAuthenticated);
+  const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
+
+  useEffect(() => {
+    const initialState = async () => {
+      const token = await load('accesToken');
+      if (token) {
+        changeIsAuthenticatedStatus();
+      }
+    };
+    initialState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -31,5 +31,7 @@ export const useAuth = () => {
     logout,
     isLoading: useSelector(({auth}) => auth.isLoading),
     isAuthenticated: useSelector(({auth}) => auth.isAuthenticated),
+    changeIsAuthenticatedStatus: () =>
+      dispatch(authActions.changeIsAuthenticatedStatus()),
   };
 };

@@ -6,4 +6,5 @@ export const palette = {
   secondary: '#4AFF3B',
   black: 'black',
   primary: '#0C4E07',
+  tertriary: '#F8D102',
 };

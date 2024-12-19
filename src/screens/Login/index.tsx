@@ -47,7 +47,7 @@ const Login = () => {
 
   const onPress = async (values: any) => {
     console.log('onPress', values);
-    navigation.navigate('Login');
+    navigation.navigate('tabNavigator');
   };
 
   return (
@@ -82,6 +82,7 @@ const Login = () => {
               </VStack>
               <VStack gap={10}>
                 <CustomButton
+                  opacity={isValid ? 1 : 0.4}
                   bg={palette.secondary}
                   disabled={!isValid || error}
                   onPress={handleSubmit(onPress)}>

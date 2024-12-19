@@ -27,11 +27,11 @@ import ArrowLeftIcon from '../../assets/icons/ArrowLeft';
 
 // redux
 import {useAuth} from '../../store/auth';
+import {LoginForm} from '../../store/auth/types';
 
 // utils
 import {getErrorMessage} from '../../utils/getErrorMessage';
 import {save} from '../../utils/storage';
-import {LoginForm} from '../../store/auth/types';
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),

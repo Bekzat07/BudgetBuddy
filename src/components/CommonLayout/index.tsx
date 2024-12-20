@@ -21,7 +21,7 @@ const CommonLayout = ({
 }: CommonLayoutProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const paddingStyle = {
-    paddingTop: Platform.OS === 'ios' ? top : top + 15,
+    paddingTop: top + 15,
     paddingBottom: bottomDevice
       ? 0
       : Platform.OS === 'ios'

@@ -1,8 +1,20 @@
 import React from 'react';
+import {
+  AddIcon,
+  HStack,
+  Pressable,
+  Text,
+  VStack,
+  View,
+} from '@gluestack-ui/themed';
+
+// components
 import CommonLayout from '../../components/CommonLayout';
-import {AddIcon, HStack, Pressable, Text, VStack} from '@gluestack-ui/themed';
+
+// theme
 import {palette} from '../../theme/palette';
-import {View} from '@gluestack-ui/themed';
+
+// assets
 import Coins from '../../assets/icons/Coins';
 
 const Budget = () => {

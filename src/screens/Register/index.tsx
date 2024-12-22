@@ -1,12 +1,19 @@
-import {KeyboardAvoidingView, VStack, View} from '@gluestack-ui/themed';
 import React from 'react';
+import {
+  KeyboardAvoidingView,
+  VStack,
+  View,
+  Text,
+  Pressable,
+} from '@gluestack-ui/themed';
+import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
+import {FormProvider, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {FormProvider, useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackScreenProps} from '../../navigator/appNavigator';
-import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
-import {Text, Pressable} from '@gluestack-ui/themed';
+
+// utils
 import {getErrorMessage} from '../../utils/getErrorMessage';
 
 // components

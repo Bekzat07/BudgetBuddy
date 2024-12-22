@@ -34,7 +34,7 @@ export const tabBarIcons: Record<
     default: <EditIcon />,
     focused: <EditIcon />,
   },
-  settings: {
+  profile: {
     default: <BellIcon />,
     focused: <BellIcon />,
   },

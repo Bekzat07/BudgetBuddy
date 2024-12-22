@@ -8,12 +8,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import TabBar from '../components/TabBar';
 import Home from '../screens/Home';
 import Budget from '../screens/Budget';
+import Profile from '../screens/Profile';
 
 export type TabNavigatorParamList = {
   Home: undefined;
   Budget: undefined;
   ReadKuran: undefined;
-  Settings: undefined;
+  Profile: undefined;
   ClassLevel: undefined;
 };
 
@@ -49,7 +50,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Budget" component={Budget} options={noHeaderStyle} />
 
       <Tab.Screen name="ReadKuran" component={Home} options={noHeaderStyle} />
-      <Tab.Screen name="Settings" component={Home} options={noHeaderStyle} />
+      <Tab.Screen name="Profile" component={Profile} options={noHeaderStyle} />
     </Tab.Navigator>
   );
 };

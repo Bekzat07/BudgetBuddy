@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
 import {Button, ButtonText, Spinner} from '@gluestack-ui/themed';
+
+// theme
 import {palette} from '../../theme/palette';
 
 type GluestackButtonProps = React.ComponentProps<typeof Button>;

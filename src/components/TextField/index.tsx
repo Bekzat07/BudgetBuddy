@@ -2,19 +2,23 @@ import React, {useState} from 'react';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {TextInputProps, TextStyle, View, ViewStyle} from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import {HStack, Input, InputField, InputSlot} from '@gluestack-ui/themed';
-
+import {
+  HStack,
+  Input,
+  InputField,
+  InputSlot,
+  InfoIcon,
+  Text,
+} from '@gluestack-ui/themed';
 // assets
 import Eye from '../../assets/icons/Eye';
 
 // style
 import styles, {inputWrapper} from './styles';
 import {palette} from '../../theme/palette';
-import {Text} from '@gluestack-ui/themed';
-import EyeClosed from '../../assets/icons/EyeClosed';
-import {InfoIcon} from '@gluestack-ui/themed';
 
 // assets
+import EyeClosed from '../../assets/icons/EyeClosed';
 
 export interface TextFieldProps extends TextInputProps {
   style?: ViewStyle | ViewStyle[];

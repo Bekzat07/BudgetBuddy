@@ -15,12 +15,13 @@ import CommonLayout from '../../components/CommonLayout';
 import {palette} from '../../theme/palette';
 
 // assets
-import Coins from '../../assets/icons/Coins';
+import {TouchableOpacity} from 'react-native';
+import {styles} from './styles';
 
 const Budget = () => {
   return (
     <CommonLayout>
-      <View flex={1} gap={16}>
+      <View flex={1} gap={16} justifyContent="center" alignItems="center">
         <HStack>
           <Pressable bg={palette.tertriary} padding={6} borderRadius={12}>
             <HStack alignItems="center">
@@ -29,25 +30,13 @@ const Budget = () => {
             </HStack>
           </Pressable>
         </HStack>
-        <HStack
-          justifyContent="space-between"
-          backgroundColor={palette.primary}
-          h={120}
-          borderRadius={24}
-          padding={16}>
-          <VStack>
-            <Text color={palette.white} fontSize={10}>
-              Total cash
-            </Text>
-            <Text color={palette.white} fontSize={24}>
-              67$
-            </Text>
-            <Text color={palette.white} fontSize={10}>
-              You saved $550 in this month $800 goal
-            </Text>
-          </VStack>
-          <Coins />
-        </HStack>
+        <View style={styles.pinCodeContainer}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(digit => (
+            <TouchableOpacity key={digit} style={styles.digitButton}>
+              <Text style={styles.digitText}>{digit}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </CommonLayout>
   );

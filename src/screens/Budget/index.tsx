@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import {Box, Text, View} from '@gluestack-ui/themed';
 import {TouchableOpacity} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -17,15 +18,20 @@ const validationSchema = yup.object({
 });
 
 const Budget = () => {
+  const [inputValue, setInputValue] = useState('');
+
   const methods = useForm({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
   });
   const {
     formState: {isValid},
-    reset,
     setValue,
   } = methods;
+
+  useEffect(() => {
+    setValue('price', inputValue);
+  }, [inputValue]);
 
   return (
     <FormProvider {...methods}>
@@ -39,7 +45,7 @@ const Budget = () => {
               <TouchableOpacity
                 key={digit}
                 style={styles.digitButton}
-                onPress={() => setValue('price', `${digit}`)}>
+                onPress={() => setInputValue(inputValue + digit)}>
                 <Text style={styles.digitText}>{digit}</Text>
               </TouchableOpacity>
             ))}
@@ -47,10 +53,12 @@ const Budget = () => {
           <View style={styles.pinCodeContainer}>
             <TouchableOpacity
               style={styles.digitButton}
-              onPress={() => reset()}>
+              onPress={() => setInputValue(inputValue.slice(0, -1))}>
               <Text style={styles.digitText}>{'X'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.digitButton}>
+            <TouchableOpacity
+              style={styles.digitButton}
+              onPress={() => setInputValue(inputValue + '0')}>
               <Text style={styles.digitText}>{0}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.digitButton} disabled={!isValid}>

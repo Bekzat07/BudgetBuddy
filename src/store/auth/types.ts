@@ -1,6 +1,7 @@
 export type AuthForm = {
   isLoading: boolean;
   user: User | null;
+  isAuthenticated: boolean;
 };
 
 export type User = {
@@ -19,4 +20,5 @@ export type RegisterForm = {
   email: string;
   password: string;
   phone: string;
+  name: string;
 };

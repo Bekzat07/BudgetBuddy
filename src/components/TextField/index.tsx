@@ -1,19 +1,24 @@
 import React, {useState} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
+import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {TextInputProps, TextStyle, View, ViewStyle} from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import {HStack, Input, InputField, InputSlot} from '@gluestack-ui/themed';
-
+import {
+  HStack,
+  Input,
+  InputField,
+  InputSlot,
+  InfoIcon,
+  Text,
+} from '@gluestack-ui/themed';
 // assets
 import Eye from '../../assets/icons/Eye';
 
 // style
 import styles, {inputWrapper} from './styles';
 import {palette} from '../../theme/palette';
-import {Text} from '@gluestack-ui/themed';
-import EyeClosed from '../../assets/icons/EyeClosed';
 
 // assets
+import EyeClosed from '../../assets/icons/EyeClosed';
 
 export interface TextFieldProps extends TextInputProps {
   style?: ViewStyle | ViewStyle[];
@@ -22,7 +27,7 @@ export interface TextFieldProps extends TextInputProps {
   textInputStyle?: TextStyle | TextStyle[];
   name: string;
   defaultValue?: string;
-  error?: any | undefined;
+  error?: FieldError | undefined;
   mask?: string;
   label?: string;
   placeholder?: string;
@@ -34,7 +39,6 @@ export interface TextFieldProps extends TextInputProps {
   maxLength?: number;
   greenBorder?: boolean;
   phoneVariant?: boolean;
-  errorReguest?: boolean;
   plusPhoneVariant?: boolean;
   isDisabled?: boolean;
 }
@@ -55,7 +59,6 @@ export default function TextField(props: TextFieldProps) {
     greenBorder,
     maxLength,
     phoneVariant = false,
-    errorReguest = false,
     plusPhoneVariant = true,
     isDisabled = false,
     ...rest
@@ -85,7 +88,7 @@ export default function TextField(props: TextFieldProps) {
                 style={[
                   backgroundStyle,
                   inputWrapper({
-                    error: error || errorReguest,
+                    error: error,
                     search: search,
                     greenBorder: greenBorder,
                   }),
@@ -176,6 +179,14 @@ export default function TextField(props: TextFieldProps) {
                   )}
                 </Input>
               </View>
+              {error && (
+                <View style={styles.errorIcon}>
+                  <InfoIcon color="red" />
+                  <Text color={'red'} style={styles.errorText}>
+                    {error.message}
+                  </Text>
+                </View>
+              )}
             </View>
           </>
         );

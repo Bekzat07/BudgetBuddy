@@ -7,6 +7,7 @@ import {extraReducers} from './thunk';
 const initialState: types.AuthForm = {
   isLoading: false,
   user: null,
+  isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
@@ -16,5 +17,5 @@ export const authSlice = createSlice({
   extraReducers,
 });
 
-export const userActions = authSlice.actions;
+export const authActions = authSlice.actions;
 export default authSlice.reducer;

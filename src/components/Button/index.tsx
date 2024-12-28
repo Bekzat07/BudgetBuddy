@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
-import {Button, ButtonText} from '@gluestack-ui/themed';
+import {Button, ButtonText, Spinner} from '@gluestack-ui/themed';
+
+// theme
 import {palette} from '../../theme/palette';
 
 type GluestackButtonProps = React.ComponentProps<typeof Button>;
@@ -7,16 +9,22 @@ type GluestackButtonProps = React.ComponentProps<typeof Button>;
 interface CustomButtonProps extends Omit<GluestackButtonProps, 'children'> {
   children: React.ReactNode;
   textColor?: string;
+  isLoading?: boolean;
 }
 
 const CustomButton: FC<CustomButtonProps> = ({
   children,
   textColor,
+  isLoading,
   ...props
 }) => {
   return (
     <Button h={52} width={'100%'} {...props}>
-      <ButtonText color={textColor || palette.white}>{children}</ButtonText>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <ButtonText color={textColor || palette.white}>{children}</ButtonText>
+      )}
     </Button>
   );
 };

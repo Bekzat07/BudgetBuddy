@@ -8,11 +8,7 @@ export const register = createAsyncThunk<User, RegisterForm>(
   'auth/login',
   async (authDetails, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.post('/auth/register', {
-        email: authDetails.email,
-        password: authDetails.password,
-        phone: authDetails.phone,
-      });
+      const {data} = await baseService.post('auth/register', authDetails);
 
       return data;
     } catch (error: any) {

@@ -1,15 +1,17 @@
 import React from 'react';
-import CommonLayout from '../../components/CommonLayout';
 import {Text, View} from '@gluestack-ui/themed';
+import {AppStackScreenProps} from '../../navigator/appNavigator';
+import {useNavigation} from '@react-navigation/native';
 
 // palette
 import {palette} from '../../theme/palette';
 
 // assets
 import Cuate from '../../assets/icons/Cuate';
+
+// components
 import CustomButton from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
-import {AppStackScreenProps} from '../../navigator/appNavigator';
+import CommonLayout from '../../components/CommonLayout';
 
 const Onboarding = () => {
   const navigation = useNavigation<AppStackScreenProps['navigation']>();

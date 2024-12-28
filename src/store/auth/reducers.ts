@@ -6,3 +6,10 @@ export const initialState = (state: types.AuthForm) => {
     user: null,
   };
 };
+
+export const changeIsAuthenticatedStatus = (state: types.AuthForm) => {
+  return {
+    ...state,
+    isAuthenticated: !state.isAuthenticated,
+  };
+};

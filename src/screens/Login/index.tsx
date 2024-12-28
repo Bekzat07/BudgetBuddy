@@ -4,11 +4,13 @@ import {
   VStack,
   View,
 } from '@gluestack-ui/themed';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {FormProvider, useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
+import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
+import {Text} from '@gluestack-ui/themed';
 
 // components
 import TextField from '../../components/TextField';
@@ -16,10 +18,20 @@ import CustomButton from '../../components/Button';
 import CommonLayout from '../../components/CommonLayout';
 
 import {AppStackScreenProps} from '../../navigator/appNavigator';
-import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
-import {Text} from '@gluestack-ui/themed';
+
+// theme
 import {palette} from '../../theme/palette';
+
+// assets
 import ArrowLeftIcon from '../../assets/icons/ArrowLeft';
+
+// redux
+import {useAuth} from '../../store/auth';
+import {LoginForm} from '../../store/auth/types';
+
+// utils
+import {getErrorMessage} from '../../utils/getErrorMessage';
+import {save} from '../../utils/storage';
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
@@ -28,26 +40,24 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const navigation = useNavigation<AppStackScreenProps['navigation']>();
-  const [error, setError] = useState(false);
+  const {login, isLoading} = useAuth();
+
   const methods = useForm({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
   });
   const {
-    formState: {isValid},
+    formState: {isValid, errors},
     handleSubmit,
-    watch,
   } = methods;
 
-  const formData = watch();
-
-  useEffect(() => {
-    setError(false);
-  }, [formData.email, formData.password]);
-
-  const onPress = async (values: any) => {
-    console.log('onPress', values);
-    navigation.navigate('tabNavigator');
+  const onSubmit = async (values: LoginForm) => {
+    try {
+      const response = await login(values);
+      save('accesToken', response.accessToken);
+    } catch (error) {
+      getErrorMessage(error);
+    }
   };
 
   return (
@@ -65,27 +75,27 @@ const Login = () => {
                 <Text fontWeight={900} fontSize={20}>
                   Log in
                 </Text>
-
                 <TextField
                   name="email"
                   label="Username/ Email"
                   placeholder="Email"
-                  errorReguest={error}
+                  error={errors.email}
                 />
                 <TextField
                   name="password"
                   label="Password"
-                  errorReguest={error}
                   secureTextEntry
                   placeholder="Password"
+                  error={errors.password}
                 />
               </VStack>
               <VStack gap={10}>
                 <CustomButton
+                  isLoading={isLoading}
                   opacity={isValid ? 1 : 0.4}
                   bg={palette.secondary}
-                  disabled={!isValid || error}
-                  onPress={handleSubmit(onPress)}>
+                  disabled={!isValid || isLoading}
+                  onPress={handleSubmit(onSubmit)}>
                   Login
                 </CustomButton>
                 <CustomButton

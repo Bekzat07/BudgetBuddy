@@ -8,11 +8,10 @@ import {
   AddIcon,
 } from '@gluestack-ui/themed';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
 // styles
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import styles from './styles';
-//icons
 
 type Route = {
   key: string;
@@ -35,7 +34,7 @@ export const tabBarIcons: Record<
     default: <EditIcon />,
     focused: <EditIcon />,
   },
-  settings: {
+  profile: {
     default: <BellIcon />,
     focused: <BellIcon />,
   },

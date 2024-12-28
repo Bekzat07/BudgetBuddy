@@ -9,6 +9,7 @@ import TabBar from '../components/TabBar';
 import Home from '../screens/Home';
 import Budget from '../screens/Budget';
 import Profile from '../screens/Profile';
+import Invoices from '../screens/Invoices';
 
 export type TabNavigatorParamList = {
   Home: undefined;
@@ -16,6 +17,7 @@ export type TabNavigatorParamList = {
   ReadKuran: undefined;
   Profile: undefined;
   ClassLevel: undefined;
+  Invoices: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();
@@ -49,7 +51,11 @@ const TabNavigator = () => {
       />
       <Tab.Screen name="Budget" component={Budget} options={noHeaderStyle} />
 
-      <Tab.Screen name="ReadKuran" component={Home} options={noHeaderStyle} />
+      <Tab.Screen
+        name="Invoices"
+        component={Invoices}
+        options={noHeaderStyle}
+      />
       <Tab.Screen name="Profile" component={Profile} options={noHeaderStyle} />
     </Tab.Navigator>
   );

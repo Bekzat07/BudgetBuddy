@@ -30,7 +30,7 @@ export const tabBarIcons: Record<
     default: <AddIcon />,
     focused: <AddIcon />,
   },
-  readkuran: {
+  invoices: {
     default: <EditIcon />,
     focused: <EditIcon />,
   },

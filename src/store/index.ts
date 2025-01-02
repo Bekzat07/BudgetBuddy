@@ -4,11 +4,13 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 // slice
 import userSlice from './user/slice';
 import authSlice from './auth/slice';
+import budgetSlice from './budget/slice';
 
 const store = configureStore({
   reducer: {
     user: userSlice,
     auth: authSlice,
+    budget: budgetSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({serializableCheck: false}),

@@ -40,6 +40,7 @@ const AppNavigator = () => {
   useEffect(() => {
     const initialState = async () => {
       const token = await load('accesToken');
+      console.log('token', token);
       if (token) {
         changeIsAuthenticatedStatus();
       }

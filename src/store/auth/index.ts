@@ -16,9 +16,9 @@ export const useAuth = () => {
   const dispatch = useDispatch();
   const authAccessTokenHeaderName = 'Authorization';
 
-  const logout = () => {
+  const logout = async () => {
+    await remove('accesToken');
     dispatch(authActions.initialState());
-    remove('accessToken');
     dispatch(authActions.changeIsAuthenticatedStatus());
     delete baseService.defaults.headers.common[authAccessTokenHeaderName];
   };

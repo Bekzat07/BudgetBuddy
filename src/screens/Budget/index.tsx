@@ -15,12 +15,15 @@ import {styles} from './styles';
 
 // theme
 import {palette} from '../../theme/palette';
+import {useBudget} from '../../store/budget';
+import CustomButton from '../../components/Button';
 
 const validationSchema = yup.object({
   price: yup.string().email().required(),
 });
 
 const Budget = () => {
+  const {addExpense, addIncome, isLoading} = useBudget();
   const [inputValue, setInputValue] = useState<string>('');
   const [budgetType, setBudgetType] = useState<string>('');
 
@@ -36,6 +39,30 @@ const Budget = () => {
   useEffect(() => {
     setValue('price', inputValue);
   }, [inputValue]);
+
+  const onSubmit = async () => {
+    console.log('onSubmit');
+
+    try {
+      if (budgetType === 'Доходы') {
+        await addIncome({
+          incomes: +inputValue,
+          currency: 'Tenge',
+          userId: '123',
+        });
+      } else if (budgetType === 'Расходы') {
+        await addExpense({
+          expenses: +inputValue,
+          currency: 'Tenge',
+          userId: '123',
+        });
+      }
+      setInputValue('');
+      setValue('price', '');
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -89,9 +116,14 @@ const Budget = () => {
               onPress={() => setInputValue(inputValue + '0')}>
               <Text style={styles.digitText}>{0}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.digitButton} disabled={!isValid}>
+            <CustomButton
+              isLoading={isLoading}
+              style={styles.digitButton}
+              disabled={isLoading}
+              opacity={isValid ? 0.4 : 1}
+              onPress={onSubmit}>
               <Text style={styles.digitText}>{'Ok'}</Text>
-            </TouchableOpacity>
+            </CustomButton>
           </View>
         </View>
       </CommonLayout>

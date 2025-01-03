@@ -1,8 +1,20 @@
-import * as types from './types';
+// hooks
+import {useDispatch} from '../../hooks/useDispatch';
 
-export const initialState = (state: types.BudgetForm) => {
+// utils
+import {addExpense} from './thunk/addExpense';
+import {SendExpenseForm, SendIncomeForm} from './types';
+import {addIncome} from './thunk/addIncome';
+import {useSelector} from '../../hooks/useSelector';
+
+export const useBudget = () => {
+  const dispatch = useDispatch();
+
   return {
-    ...state,
-    budget: null,
+    addExpense: async (authDetails: SendExpenseForm) =>
+      dispatch(addExpense(authDetails)).unwrap(),
+    addIncome: async (authDetails: SendIncomeForm) =>
+      dispatch(addIncome(authDetails)).unwrap(),
+    isLoading: useSelector(({budget}) => budget.isLoading),
   };
 };

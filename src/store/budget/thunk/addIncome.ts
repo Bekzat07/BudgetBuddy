@@ -6,7 +6,7 @@ import {Budget, SendIncomeForm} from '../types';
 
 // types
 
-export const AddIncome = createAsyncThunk<Budget, SendIncomeForm>(
+export const addIncome = createAsyncThunk<Budget, SendIncomeForm>(
   'auth/login',
   async (budgetDetails, {rejectWithValue}) => {
     try {

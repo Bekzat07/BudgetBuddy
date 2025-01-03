@@ -54,7 +54,7 @@ const Login = () => {
   const onSubmit = async (values: LoginForm) => {
     try {
       const response = await login(values);
-      save('accesToken', response.accessToken);
+      await save('accesToken', response.accessToken);
     } catch (error) {
       getErrorMessage(error);
     }

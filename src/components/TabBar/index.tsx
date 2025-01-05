@@ -23,20 +23,20 @@ export const tabBarIcons: Record<
   {default: JSX.Element; focused: JSX.Element}
 > = {
   home: {
-    default: <SunIcon />,
-    focused: <SunIcon />,
+    default: <SunIcon color="black" />,
+    focused: <SunIcon color="red" />,
   },
   budget: {
-    default: <AddIcon />,
-    focused: <AddIcon />,
+    default: <AddIcon color="black" />,
+    focused: <AddIcon color="red" />,
   },
   invoices: {
-    default: <EditIcon />,
-    focused: <EditIcon />,
+    default: <EditIcon color="black" />,
+    focused: <EditIcon color="red" />,
   },
   profile: {
-    default: <BellIcon />,
-    focused: <BellIcon />,
+    default: <BellIcon color="black" />,
+    focused: <BellIcon color="red" />,
   },
 };
 

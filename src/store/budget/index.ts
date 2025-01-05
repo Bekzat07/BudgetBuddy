@@ -16,5 +16,6 @@ export const useBudget = () => {
     addIncome: async (authDetails: SendIncomeForm) =>
       dispatch(addIncome(authDetails)).unwrap(),
     isLoading: useSelector(({budget}) => budget.isLoading),
+    budget: useSelector(({budget}) => budget.budget),
   };
 };

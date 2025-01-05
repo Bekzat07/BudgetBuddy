@@ -8,7 +8,7 @@ export type Budget = {
   expenses: number[];
   incomes: number[];
   date: Date;
-  currency: string;
+  currency?: string;
   userId: string;
 };
 

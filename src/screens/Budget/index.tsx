@@ -17,12 +17,15 @@ import {styles} from './styles';
 import {palette} from '../../theme/palette';
 import {useBudget} from '../../store/budget';
 import CustomButton from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
+import {AppStackScreenProps} from '../../navigator/appNavigator';
 
 const validationSchema = yup.object({
   price: yup.string().email().required(),
 });
 
 const Budget = () => {
+  const navigation = useNavigation<AppStackScreenProps['navigation']>();
   const {addExpense, addIncome, isLoading} = useBudget();
   const [inputValue, setInputValue] = useState<string>('');
   const [budgetType, setBudgetType] = useState<string>('Доходы');
@@ -58,6 +61,7 @@ const Budget = () => {
       }
       setInputValue('');
       setValue('price', '');
+      navigation.navigate('tabNavigator', {screen: 'Home'});
     } catch (error) {
       console.log('error', error);
     }

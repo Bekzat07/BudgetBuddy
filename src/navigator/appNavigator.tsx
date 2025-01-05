@@ -25,7 +25,7 @@ export type MainStackParamList = {
   Onboarding: undefined;
   Login: undefined;
   Register: undefined;
-  tabNavigator: undefined;
+  tabNavigator: any;
 };
 
 export type AppStackScreenProps = NativeStackScreenProps<

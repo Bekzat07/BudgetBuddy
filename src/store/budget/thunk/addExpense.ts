@@ -8,7 +8,13 @@ export const addExpense = createAsyncThunk<Budget, SendExpenseForm>(
   'auth/login',
   async (budgetDetails, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.post('budget/addExpense', budgetDetails);
+      console.log('budgetDetails', budgetDetails);
+      const {data} = await baseService.post('budget/addExpense', {
+        expenses: budgetDetails.expenses,
+        userId: budgetDetails.userId,
+        currency: budgetDetails.currency,
+      });
+      console.log('data', data);
       return data;
     } catch (error: any) {
       return rejectWithValue(

@@ -17,6 +17,7 @@ import {useAuth} from '../store/auth';
 
 // utils
 import {load} from '../utils/storage';
+import {useUser} from '../store/user';
 
 export type MainStackParamList = {
   Onboarding: undefined;
@@ -36,13 +37,22 @@ export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
   const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
+  const {getUser} = useUser();
 
   useEffect(() => {
     const initialState = async () => {
-      const token = await load('accesToken');
-      console.log('token', token);
-      if (token) {
+      try {
+        const token = await load('accesToken');
+        if (token) {
+          const res = await getUser();
+          changeIsAuthenticatedStatus();
+          console.log('res', res);
+        }
+      } catch (error) {
+        console.log('error', error);
         changeIsAuthenticatedStatus();
+        // navigate to login or register screen
+        // navigation.navigate('Login'); // for example
       }
     };
     initialState();

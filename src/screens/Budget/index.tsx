@@ -25,7 +25,7 @@ const validationSchema = yup.object({
 const Budget = () => {
   const {addExpense, addIncome, isLoading} = useBudget();
   const [inputValue, setInputValue] = useState<string>('');
-  const [budgetType, setBudgetType] = useState<string>('');
+  const [budgetType, setBudgetType] = useState<string>('Доходы');
 
   const methods = useForm({
     resolver: yupResolver(validationSchema),
@@ -41,20 +41,19 @@ const Budget = () => {
   }, [inputValue]);
 
   const onSubmit = async () => {
-    console.log('onSubmit');
-
     try {
       if (budgetType === 'Доходы') {
-        await addIncome({
-          incomes: +inputValue,
+        const res = await addIncome({
+          income: +inputValue,
           currency: 'Tenge',
-          userId: '123',
+          userId: '6777b61cd155542ed52587ff',
         });
+        console.log('res', res);
       } else if (budgetType === 'Расходы') {
         await addExpense({
           expenses: +inputValue,
           currency: 'Tenge',
-          userId: '123',
+          userId: '6777b61cd155542ed52587ff',
         });
       }
       setInputValue('');

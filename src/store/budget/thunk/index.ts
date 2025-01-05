@@ -7,14 +7,15 @@ export const extraReducers = (builder: ActionReducerMapBuilder<BudgetForm>) => {
   builder.addMatcher(isAnyOf(addExpense.pending, addIncome.pending), state => {
     state.isLoading = true;
   });
-
   builder.addMatcher(
-    isAnyOf(
-      addExpense.rejected,
-      addExpense.fulfilled,
-      addIncome.fulfilled,
-      addIncome.rejected,
-    ),
+    isAnyOf(addExpense.fulfilled, addIncome.fulfilled),
+    (state, action) => {
+      state.isLoading = false;
+      state.budget = action.payload;
+    },
+  );
+  builder.addMatcher(
+    isAnyOf(addExpense.rejected, addIncome.rejected),
     state => {
       state.isLoading = false;
     },

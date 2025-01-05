@@ -18,7 +18,7 @@ export type SendExpenseForm = {
   currency: string;
 };
 export type SendIncomeForm = {
-  incomes: number;
+  income: number;
   userId: string;
   currency: string;
 };

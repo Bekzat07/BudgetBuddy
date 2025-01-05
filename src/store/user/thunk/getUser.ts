@@ -1,16 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import baseService from '../../../init/axios/baseService';
+import {User} from '../types';
 
-// types
-import {Budget, SendIncomeForm} from '../types';
-
-// types
-
-export const addIncome = createAsyncThunk<Budget, SendIncomeForm>(
+export const getUser = createAsyncThunk<User, void>(
   'auth/login',
-  async (budgetDetails, {rejectWithValue}) => {
+  async (_, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.post('budget/addIncome', budgetDetails);
+      const {data} = await baseService.get('getUser');
+      console.log('data', data);
       return data;
     } catch (error: any) {
       return rejectWithValue(

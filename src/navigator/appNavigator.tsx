@@ -18,6 +18,8 @@ import {useAuth} from '../store/auth';
 // utils
 import {load} from '../utils/storage';
 import {useBudget} from '../store/budget';
+import {setAuthHeader} from '../init/axios/baseService';
+import {getErrorMessage} from '../utils/getErrorMessage';
 
 export type MainStackParamList = {
   Onboarding: undefined;
@@ -43,14 +45,13 @@ const AppNavigator = () => {
     const initialState = async () => {
       try {
         const token = await load('accesToken');
+        setAuthHeader(token);
         if (token) {
-          console.log('token');
           changeIsAuthenticatedStatus();
-          const res = await getBudget();
-          console.log('res', res);
+          await getBudget();
         }
       } catch (error) {
-        console.log('error', error);
+        getErrorMessage(error);
       }
     };
     initialState();

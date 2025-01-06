@@ -55,6 +55,7 @@ const Login = () => {
     try {
       const response = await login(values);
       await save('accesToken', response.accessToken);
+      await save('refreshToken', response.refreshToken);
     } catch (error) {
       getErrorMessage(error);
     }

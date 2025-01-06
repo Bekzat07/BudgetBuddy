@@ -39,7 +39,7 @@ baseService.interceptors.response.use(
             {refreshToken: currentRefreshToken},
           )) as any;
           await save('accessToken', response.accessToken);
-          await save('refreshToken', response.accessToken);
+          await save('refreshToken', response.refreshToken);
           setAuthHeader(response.data[response.accessToken]);
         }
       } catch (err) {

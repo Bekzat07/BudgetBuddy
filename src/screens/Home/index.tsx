@@ -1,53 +1,61 @@
 import React from 'react';
-import {
-  AddIcon,
-  HStack,
-  Pressable,
-  Text,
-  VStack,
-  View,
-} from '@gluestack-ui/themed';
+import {HStack, Text, VStack, View} from '@gluestack-ui/themed';
 
 // theme
 import {palette} from '../../theme/palette';
 
-// assets
-import Coins from '../../assets/icons/Coins';
+// assets;
 
 // components
 import CommonLayout from '../../components/CommonLayout';
+import {useBudget} from '../../store/budget';
+import {currencies} from '../../utils/helpers';
 
 const Home = () => {
+  const {budget} = useBudget();
+
+  const incomes = budget?.incomes.reduce((acc, e) => acc + e, 0) || 0;
+  const expenses = budget?.expenses.reduce((acc, e) => acc + e, 0) || 0;
+  const budgetCurrency: string = budget?.currency || 'USD';
   return (
-    <CommonLayout>
-      <View flex={1} gap={16}>
-        <HStack>
-          <Pressable bg={palette.tertriary} padding={6} borderRadius={12}>
-            <HStack alignItems="center">
-              <Text fontSize={14}>Add bank</Text>
-              <AddIcon size="xs" />
-            </HStack>
-          </Pressable>
-        </HStack>
-        <HStack
-          justifyContent="space-between"
-          backgroundColor={palette.primary}
-          h={120}
-          borderRadius={24}
-          padding={16}>
-          <VStack>
-            <Text color={palette.white} fontSize={10}>
-              Total cash
+    <CommonLayout paddingHorizontal>
+      <HStack
+        justifyContent="center"
+        borderBottomColor={palette.black}
+        pb={16}
+        borderBottomWidth={1}>
+        <Text fontSize={24} fontWeight={600}>
+          Счета
+        </Text>
+      </HStack>
+      <View flex={1} gap={16} p={16}>
+        <VStack justifyContent="center" alignItems="center">
+          <Text fontSize={32} fontWeight={900}>
+            {`${incomes - expenses} ${currencies[budgetCurrency]}`}
+          </Text>
+          <Text fontSize={20} fontWeight={600}>
+            Общий баланс
+          </Text>
+        </VStack>
+        <VStack bg={'$blueGray300'} py={16} px={8} gap={8}>
+          <HStack justifyContent="space-between">
+            <Text fontSize={20} fontWeight={600}>
+              Доходы
             </Text>
-            <Text color={palette.white} fontSize={24}>
-              67$
+            <Text fontSize={22} fontWeight={900}>
+              {`${incomes} ${currencies[budgetCurrency]}`}
             </Text>
-            <Text color={palette.white} fontSize={10}>
-              You saved $550 in this month $800 goal
+          </HStack>
+          <View borderWidth={1} borderColor={palette.gray} />
+          <HStack justifyContent="space-between">
+            <Text fontSize={20} fontWeight={600}>
+              Расходы
             </Text>
-          </VStack>
-          <Coins />
-        </HStack>
+            <Text fontSize={22} fontWeight={900}>
+              {`${expenses} ${currencies[budgetCurrency]}`}
+            </Text>
+          </HStack>
+        </VStack>
       </View>
     </CommonLayout>
   );

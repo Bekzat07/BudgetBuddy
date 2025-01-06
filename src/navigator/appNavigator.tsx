@@ -17,12 +17,15 @@ import {useAuth} from '../store/auth';
 
 // utils
 import {load} from '../utils/storage';
+import {useBudget} from '../store/budget';
+import {setAuthHeader} from '../init/axios/baseService';
+import {getErrorMessage} from '../utils/getErrorMessage';
 
 export type MainStackParamList = {
   Onboarding: undefined;
   Login: undefined;
   Register: undefined;
-  tabNavigator: undefined;
+  tabNavigator: any;
 };
 
 export type AppStackScreenProps = NativeStackScreenProps<
@@ -36,12 +39,19 @@ export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
   const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
+  const {getBudget} = useBudget();
 
   useEffect(() => {
     const initialState = async () => {
-      const token = await load('accesToken');
-      if (token) {
-        changeIsAuthenticatedStatus();
+      try {
+        const token = await load('accesToken');
+        setAuthHeader(token);
+        if (token) {
+          await getBudget();
+          changeIsAuthenticatedStatus();
+        }
+      } catch (error) {
+        getErrorMessage(error);
       }
     };
     initialState();

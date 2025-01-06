@@ -1,24 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {Box, Text, View} from '@gluestack-ui/themed';
+import {Box, HStack, Pressable, Text, View} from '@gluestack-ui/themed';
 import {TouchableOpacity} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import {FormProvider, useForm} from 'react-hook-form';
 
 // components
 import CommonLayout from '../../components/CommonLayout';
+import TextField from '../../components/TextField';
 
 // assets
 import {styles} from './styles';
-import {FormProvider, useForm} from 'react-hook-form';
-import TextField from '../../components/TextField';
+
+// theme
+import {palette} from '../../theme/palette';
+import {useBudget} from '../../store/budget';
+import CustomButton from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
+import {AppStackScreenProps} from '../../navigator/appNavigator';
 
 const validationSchema = yup.object({
   price: yup.string().email().required(),
 });
 
 const Budget = () => {
-  const [inputValue, setInputValue] = useState('');
+  const navigation = useNavigation<AppStackScreenProps['navigation']>();
+  const {addExpense, addIncome, isLoading} = useBudget();
+  const [inputValue, setInputValue] = useState<string>('');
+  const [budgetType, setBudgetType] = useState<string>('Доходы');
 
   const methods = useForm({
     resolver: yupResolver(validationSchema),
@@ -33,13 +43,61 @@ const Budget = () => {
     setValue('price', inputValue);
   }, [inputValue]);
 
+  const onSubmit = async () => {
+    try {
+      if (budgetType === 'Доходы') {
+        const res = await addIncome({
+          income: +inputValue,
+          currency: 'Tenge',
+          userId: '6777b61cd155542ed52587ff',
+        });
+        console.log('res', res);
+      } else if (budgetType === 'Расходы') {
+        await addExpense({
+          expenses: +inputValue,
+          currency: 'Tenge',
+          userId: '6777b61cd155542ed52587ff',
+        });
+      }
+      setInputValue('');
+      setValue('price', '');
+      navigation.navigate('tabNavigator', {screen: 'Home'});
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <CommonLayout>
         <View flex={1} justifyContent="center" alignItems="center">
+          <HStack
+            mb={16}
+            bg={palette.gray}
+            borderColor={palette.gray}
+            borderWidth={3}
+            gap={6}>
+            <Pressable onPress={() => setBudgetType('Доходы')}>
+              <Text
+                bg={budgetType === 'Доходы' ? palette.black : palette.gray}
+                color={palette.white}
+                p={4}>
+                {'Доходы'}
+              </Text>
+            </Pressable>
+            <Pressable onPress={() => setBudgetType('Расходы')}>
+              <Text
+                p={4}
+                color={palette.white}
+                bg={budgetType === 'Расходы' ? palette.black : palette.gray}>
+                {'Расходы'}
+              </Text>
+            </Pressable>
+          </HStack>
           <Box width={250} pb={16}>
             <TextField name="price" />
           </Box>
+
           <View style={styles.pinCodeContainer}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(digit => (
               <TouchableOpacity
@@ -61,9 +119,14 @@ const Budget = () => {
               onPress={() => setInputValue(inputValue + '0')}>
               <Text style={styles.digitText}>{0}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.digitButton} disabled={!isValid}>
+            <CustomButton
+              isLoading={isLoading}
+              style={styles.digitButton}
+              disabled={isLoading}
+              opacity={isValid ? 0.4 : 1}
+              onPress={onSubmit}>
               <Text style={styles.digitText}>{'Ok'}</Text>
-            </TouchableOpacity>
+            </CustomButton>
           </View>
         </View>
       </CommonLayout>

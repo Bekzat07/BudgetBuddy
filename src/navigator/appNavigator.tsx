@@ -47,8 +47,8 @@ const AppNavigator = () => {
         const token = await load('accesToken');
         setAuthHeader(token);
         if (token) {
-          changeIsAuthenticatedStatus();
           await getBudget();
+          changeIsAuthenticatedStatus();
         }
       } catch (error) {
         getErrorMessage(error);

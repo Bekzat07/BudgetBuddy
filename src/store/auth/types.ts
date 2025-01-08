@@ -10,6 +10,7 @@ export type User = {
   phone: string;
   accessToken: string;
   refreshToken: string;
+  image: string;
 };
 
 export type LoginForm = {

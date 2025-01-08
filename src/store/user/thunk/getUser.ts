@@ -6,8 +6,7 @@ export const getUser = createAsyncThunk<User, void>(
   'auth/login',
   async (_, {rejectWithValue}) => {
     try {
-      const {data} = await baseService.get('getUser');
-      console.log('data', data);
+      const {data} = await baseService.get('users/getUser');
       return data;
     } catch (error: any) {
       return rejectWithValue(

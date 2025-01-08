@@ -40,7 +40,7 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const navigation = useNavigation<AppStackScreenProps['navigation']>();
-  const {login, isLoading} = useAuth();
+  const {login, isLoading, changeIsAuthenticatedStatus} = useAuth();
 
   const methods = useForm({
     resolver: yupResolver(validationSchema),
@@ -57,6 +57,7 @@ const Login = () => {
       console.log('response', response);
       await save('accesToken', response.accessToken);
       await save('refreshToken', response.refreshToken);
+      changeIsAuthenticatedStatus();
     } catch (error) {
       getErrorMessage(error);
     }

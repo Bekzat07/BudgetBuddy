@@ -6,7 +6,7 @@ import {extraReducers} from './thunk';
 
 const initialState: types.UserForm = {
   isLoading: false,
-  user: null,
+  currentUser: null,
 };
 
 export const userSlice = createSlice({

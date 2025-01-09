@@ -38,7 +38,7 @@ export const noHeaderStyle = {headerShown: false};
 export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
-  const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
+  const {isAuthenticated, changeIsAuthenticatedStatus, user} = useAuth();
   const {getBudget} = useBudget();
   const {getUser} = useUser();
 
@@ -59,7 +59,7 @@ const AppNavigator = () => {
     };
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <NavigationContainer>

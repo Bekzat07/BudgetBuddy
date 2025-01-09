@@ -3,10 +3,9 @@ import baseService from '../../../init/axios/baseService';
 import {ImageForm} from '../types';
 
 export const addProfileImage = createAsyncThunk<ImageForm, ImageForm>(
-  'auth/login',
+  'user/addProfileImage',
   async (profileDetails, {rejectWithValue}) => {
     try {
-      console.log('profileDetails', profileDetails.image);
       const {data} = await baseService.post(
         `users/${profileDetails.userId}/profile-image`,
         profileDetails.image,
@@ -16,7 +15,6 @@ export const addProfileImage = createAsyncThunk<ImageForm, ImageForm>(
           },
         },
       );
-      console.log('data', data);
       return data;
     } catch (error: any) {
       console.log('error', error);

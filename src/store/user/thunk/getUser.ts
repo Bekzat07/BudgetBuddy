@@ -3,7 +3,7 @@ import baseService from '../../../init/axios/baseService';
 import {User} from '../types';
 
 export const getUser = createAsyncThunk<User, void>(
-  'auth/login',
+  'user/getUser',
   async (_, {rejectWithValue}) => {
     try {
       const {data} = await baseService.get('users/getUser');

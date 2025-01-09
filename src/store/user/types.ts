@@ -8,4 +8,10 @@ export type User = {
   _id: string;
   phone: string;
   image: string;
+  name: string;
+};
+
+export type ImageForm = {
+  image: any;
+  userId: string;
 };

@@ -38,22 +38,19 @@ export const noHeaderStyle = {headerShown: false};
 export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
-  const {isAuthenticated, changeIsAuthenticatedStatus, user} = useAuth();
+  const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
   const {getBudget} = useBudget();
   const {getUser} = useUser();
-  console.log('userf', user);
+
   useEffect(() => {
     const initialState = async () => {
       try {
         const token = await load('accesToken');
         setAuthHeader(token);
         if (token) {
-          // console.log('token', token);
-          await getBudget();
           changeIsAuthenticatedStatus();
-          console.log('budget');
           await getUser();
-          console.log('user1');
+          await getBudget();
         }
       } catch (error) {
         console.log('error', error);

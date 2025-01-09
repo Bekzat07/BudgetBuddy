@@ -1,28 +1,31 @@
-import {Image, Pressable, Text, View} from '@gluestack-ui/themed';
+import {Pressable, Text, View} from '@gluestack-ui/themed';
 import React, {useState} from 'react';
-
-// components
-import CommonLayout from '../../components/CommonLayout';
-import CustomButton from '../../components/Button';
-import {useAuth} from '../../store/auth';
-import {HStack} from '@gluestack-ui/themed';
-import {palette} from '../../theme/palette';
-import {useUser} from '../../store/user';
-
-import {Box} from '@gluestack-ui/themed';
-import User from '../../assets/icons/User';
-import Download from '../../assets/icons/Dowload';
-import styles from './styles';
+import {HStack, Box} from '@gluestack-ui/themed';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
   MediaType,
 } from 'react-native-image-picker';
 
+// components
+import CommonLayout from '../../components/CommonLayout';
+import CustomButton from '../../components/Button';
+import Image from '../../components/Image';
+
+// redux
+import {useAuth} from '../../store/auth';
+import {useUser} from '../../store/user';
+
+// theme
+import {palette} from '../../theme/palette';
+
+// utils
+import {getErrorMessage} from '../../utils/getErrorMessage';
+
 const Profile = () => {
   const {logout} = useAuth();
   const {currentUser, updateProfileImage} = useUser();
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
   const selectImageFromGallery = async () => {
     try {
@@ -33,7 +36,6 @@ const Profile = () => {
 
       const result = await launchImageLibrary(options);
 
-      console.log('result?.assets[0].uri');
       if (result.assets) {
         const file = result?.assets[0];
         const formData = new FormData() as any;
@@ -47,10 +49,10 @@ const Profile = () => {
           userId: currentUser?._id || '',
           image: formData || '',
         });
-        setPhoto(newImage.image);
+        setImage(newImage.image);
       }
     } catch (error) {
-      console.log('error', error);
+      getErrorMessage(error);
     }
   };
 
@@ -69,22 +71,7 @@ const Profile = () => {
         <View alignSelf="center">
           <Box>
             <Pressable onPress={selectImageFromGallery}>
-              {currentUser?.image || photo ? (
-                <Image
-                  alt="profile image"
-                  my={16}
-                  h={120}
-                  w={120}
-                  source={{uri: photo || currentUser?.image}}
-                  borderRadius={999}
-                />
-              ) : (
-                <User width={100} height={100} style={styles.logo} />
-              )}
-
-              <View position="absolute" right={0} bottom={0}>
-                <Download width={32} color={'black'} />
-              </View>
+              <Image image={image || currentUser?.image || ''} />
             </Pressable>
           </Box>
           <Text fontWeight={600} fontSize={24} textAlign="center">

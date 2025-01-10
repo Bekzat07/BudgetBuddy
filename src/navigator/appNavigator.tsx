@@ -8,7 +8,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import TabNavigator from './tabNavigator';
 
 // screens
-import Onboarding from '../screens/Onboarding';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
@@ -20,6 +19,7 @@ import {load} from '../utils/storage';
 import {useBudget} from '../store/budget';
 import {setAuthHeader} from '../init/axios/baseService';
 import {getErrorMessage} from '../utils/getErrorMessage';
+import {useUser} from '../store/user';
 
 export type MainStackParamList = {
   Onboarding: undefined;
@@ -38,8 +38,9 @@ export const noHeaderStyle = {headerShown: false};
 export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
-  const {isAuthenticated, changeIsAuthenticatedStatus} = useAuth();
+  const {isAuthenticated, changeIsAuthenticatedStatus, user} = useAuth();
   const {getBudget} = useBudget();
+  const {getUser} = useUser();
 
   useEffect(() => {
     const initialState = async () => {
@@ -47,27 +48,29 @@ const AppNavigator = () => {
         const token = await load('accesToken');
         setAuthHeader(token);
         if (token) {
-          await getBudget();
           changeIsAuthenticatedStatus();
+          await getUser();
+          await getBudget();
         }
       } catch (error) {
+        console.log('error', error);
         getErrorMessage(error);
       }
     };
     initialState();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {!isAuthenticated ? (
           <>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Onboarding"
               component={Onboarding}
               options={{...noHeaderStyle, ...gestureDisabled}}
-            />
+            /> */}
             <Stack.Screen
               name="Login"
               component={Login}

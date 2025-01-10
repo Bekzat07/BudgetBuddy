@@ -14,7 +14,6 @@ export const addExpense = createAsyncThunk<Budget, SendExpenseForm>(
         userId: budgetDetails.userId,
         currency: budgetDetails.currency,
       });
-      console.log('data', data);
       return data;
     } catch (error: any) {
       return rejectWithValue(

@@ -5,13 +5,15 @@ import baseService from '../../../init/axios/baseService';
 import {RegisterForm, User} from '../types';
 
 export const register = createAsyncThunk<User, RegisterForm>(
-  'auth/login',
+  'auth/register',
   async (authDetails, {rejectWithValue}) => {
     try {
+      console.log('authDetails', authDetails);
       const {data} = await baseService.post('auth/register', authDetails);
 
       return data;
     } catch (error: any) {
+      console.log(error);
       return rejectWithValue(
         error.response?.data.errorMessage || 'Something is wrong',
       );

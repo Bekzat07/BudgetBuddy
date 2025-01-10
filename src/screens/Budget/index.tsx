@@ -19,6 +19,7 @@ import {useBudget} from '../../store/budget';
 import CustomButton from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackScreenProps} from '../../navigator/appNavigator';
+import {useUser} from '../../store/user';
 
 const validationSchema = yup.object({
   price: yup.string().email().required(),
@@ -27,6 +28,7 @@ const validationSchema = yup.object({
 const Budget = () => {
   const navigation = useNavigation<AppStackScreenProps['navigation']>();
   const {addExpense, addIncome, isLoading} = useBudget();
+  const {currentUser} = useUser();
   const [inputValue, setInputValue] = useState<string>('');
   const [budgetType, setBudgetType] = useState<string>('Доходы');
 
@@ -42,21 +44,21 @@ const Budget = () => {
   useEffect(() => {
     setValue('price', inputValue);
   }, [inputValue]);
-
+  console.log('currentUser', currentUser);
   const onSubmit = async () => {
     try {
       if (budgetType === 'Доходы') {
         const res = await addIncome({
           income: +inputValue,
           currency: 'Tenge',
-          userId: '6777b61cd155542ed52587ff',
+          userId: currentUser?._id || '',
         });
         console.log('res', res);
       } else if (budgetType === 'Расходы') {
         await addExpense({
           expenses: +inputValue,
           currency: 'Tenge',
-          userId: '6777b61cd155542ed52587ff',
+          userId: currentUser?._id || '',
         });
       }
       setInputValue('');

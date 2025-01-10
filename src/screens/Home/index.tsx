@@ -17,6 +17,7 @@ const Home = () => {
   const incomes = budget?.incomes.reduce((acc, e) => acc + e, 0) || 0;
   const expenses = budget?.expenses.reduce((acc, e) => acc + e, 0) || 0;
   const budgetCurrency: string = budget?.currency || 'USD';
+
   return (
     <CommonLayout paddingHorizontal>
       <HStack

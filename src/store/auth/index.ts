@@ -18,6 +18,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     await remove('accesToken');
+    await remove('refreshToken');
     dispatch(authActions.initialState());
     dispatch(authActions.changeIsAuthenticatedStatus());
     delete baseService.defaults.headers.common[authAccessTokenHeaderName];
@@ -33,5 +34,6 @@ export const useAuth = () => {
     isAuthenticated: useSelector(({auth}) => auth.isAuthenticated),
     changeIsAuthenticatedStatus: () =>
       dispatch(authActions.changeIsAuthenticatedStatus()),
+    user: useSelector(({auth}) => auth.user),
   };
 };

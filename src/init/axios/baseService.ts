@@ -6,7 +6,7 @@ import {getErrorMessage} from '../../utils/getErrorMessage';
 const accessToken = 'accessToken';
 
 export const authAccessTokenHeaderName = 'Authorization';
-
+console.log('Config.API_KEY', Config.API_KEY);
 const baseService = axios.create({
   baseURL: `${Config.API_KEY}`,
 });

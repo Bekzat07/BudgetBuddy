@@ -57,6 +57,7 @@ const Register = () => {
   const onSubmit = async (values: RegisterForm) => {
     try {
       await register(values);
+      navigation.navigate('Login');
     } catch (error) {
       getErrorMessage(error);
     }

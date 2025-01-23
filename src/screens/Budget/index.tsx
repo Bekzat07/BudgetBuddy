@@ -44,7 +44,7 @@ const Budget = () => {
   useEffect(() => {
     setValue('price', inputValue);
   }, [inputValue]);
-  console.log('currentUser', currentUser);
+
   const onSubmit = async () => {
     try {
       if (budgetType === 'Доходы') {

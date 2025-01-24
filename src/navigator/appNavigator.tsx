@@ -38,7 +38,8 @@ export const noHeaderStyle = {headerShown: false};
 export const gestureDisabled = {gestureEnabled: false};
 
 const AppNavigator = () => {
-  const {isAuthenticated, changeIsAuthenticatedStatus, user} = useAuth();
+  const {isAuthenticated, changeIsAuthenticatedStatus, user, logout} =
+    useAuth();
   const {getBudget} = useBudget();
   const {getUser} = useUser();
 
@@ -53,7 +54,7 @@ const AppNavigator = () => {
           await getBudget();
         }
       } catch (error) {
-        console.log('error', error);
+        await logout();
         getErrorMessage(error);
       }
     };
